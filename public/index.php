@@ -7,7 +7,7 @@ if (version_compare(PHP_VERSION, $minPHPVersion, '<'))
 unset($minPHPVersion);
 $base = $_SERVER['DOCUMENT_ROOT'];
 $base = str_replace('public', '', $base);
-define("BASE_PATH", $base."/");
+define("BASE_PATH", $base);
 require_once '../vendor/autoload.php';
 
 use System\App\App;

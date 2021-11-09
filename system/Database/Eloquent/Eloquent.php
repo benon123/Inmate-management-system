@@ -37,7 +37,7 @@ class Eloquent extends FluentApi
     {
         $table_name = explode("\\", get_called_class());
         $table_name = self::decamelize($table_name[(count($table_name) - 1)]);
-        return DB::table($table_name)->row()->where($column, $id)->get();
+        return DB::table($table_name)->row()->where($column, $id);
     }
 
 

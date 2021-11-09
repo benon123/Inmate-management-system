@@ -14,3 +14,10 @@ Route::group(['prefix' => 'auth'], function(){
 
 });
 
+//users/register
+Route::get('users/register', [Home::class, 'registerUser']);
+
+Route::post('users/store', [Home::class, 'addUser']);
+
+
+

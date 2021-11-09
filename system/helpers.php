@@ -1,10 +1,10 @@
 <?php
 use League\BooBoo\BooBoo;
 use System\Http\CRSF\CRSF;
-use System\Http\Redirect;
+use System\Http\Redirect\Redirect;
 use System\Http\Request\Request;
-use System\Http\Response\Alert;
-use System\Http\Response\Res;
+use System\Http\Response\Alert\Alert;
+use System\Http\Response\Response;
 use System\Password\Password;
 use System\Views\Template;
 
@@ -64,23 +64,7 @@ if(!function_exists('url'))
         !empty(trim($url)) ? $base .= $url : $base;
         return $base;
     }
-}
-
-
-
-if(!function_exists('APPPATH'))
-{
-    /**
-     * Return the app path
-     *
-     * @return string
-     */
-    function APPPATH()
-    {
-        return $_SERVER['DOCUMENT_ROOT'];
-    }
-}
-
+} 
 
 
 if(!function_exists('array_to_object'))
@@ -149,7 +133,7 @@ if(!function_exists('session'))
 
 
 
-if(!function_exists('assets'))
+if(!function_exists('asset'))
 {
     /**
      * Access app assets
@@ -157,7 +141,7 @@ if(!function_exists('assets'))
      * @param string $asset
      * @return string asset url
      */
-    function assets(string $asset){
+    function asset(string $asset){
         return url($asset);
     }
 }
@@ -222,20 +206,10 @@ if(!function_exists('redirect'))
         
     /**
      * Send an Http Redirect
-     * @param int $status Response status
-     *  
-     *  200 - Success
-     * 
-     * 418 - Infor
-     * 
-     * 419 - Failure
-     * 
-     * 500 - Server error
-     * @return \System\Http\Redirect
+     * @return \System\Http\Redirect\Redirect
      */
-    function redirect(string $url = '', int $status = 200) {
+    function redirect(string $url = '') {
         $redirect = new Redirect();
-        $redirect->status = $status;
         $redirect->url = $url;
         return $redirect;
     }
@@ -274,7 +248,16 @@ if(!function_exists('csrf_field'))
     {
         $token_id = CRSF::crsfTokenId();
         $token = CRSF::crsfTokenValue();
-        return "<input type='hidden' name='$token_id' value = '$token'>";
+        return "<input type='hidden' name='$token_id' value ='$token'>";
+    }
+}
+
+if(!function_exists('method_field'))
+{
+    function method_field(string $method)
+    {
+        $method = strtoupper($method);
+        return "<input type='hidden' name='_method' value ='$method'>";
     }
 }
 
@@ -307,11 +290,11 @@ if(!function_exists('password'))
 
 /**
  * Response
- *
+ * @return \System\Http\Response\Response
  */
 function response()
 {
-    return new Res();
+    return new Response();
 }
 
 
@@ -319,13 +302,11 @@ function response()
 /**
  * Boostrap 4 Alerts
  *
- * @return \System\Http\Response\Alert
+ * @return \System\Http\Response\Alert\Alert
  */
 function alert()
 {
    return new Alert(); 
 }
 
-//CONSTANTS;
-define('APPNAME', env('APP_NAME'));
-define('APPPATH', $_SERVER['DOCUMENT_ROOT']);
+

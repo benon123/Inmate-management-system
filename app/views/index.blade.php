@@ -24,7 +24,7 @@
                             <input type="hidden" name="login" value="1"/>
                             <button type="submit" class="btn btn-success w-100 login-btn">PROCEED</button>
                         </div>
-                        Don't have an account? <a href="{{ url('account') }}">Create Account</a>
+                        Don't have an account? <a href="{{ url('users/register') }}">Create Account</a>
                     </form>
                     <div class="response"></div>
                 </div>

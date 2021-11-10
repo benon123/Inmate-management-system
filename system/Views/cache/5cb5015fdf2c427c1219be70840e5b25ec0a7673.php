@@ -36,7 +36,7 @@
     <script src="<?php echo e(asset('jquery/jquery-3.6.0.min.js')); ?>"></script>
     <script src="<?php echo e(asset('bootstrap/js/popper.min.js')); ?>"></script>
     <script src="<?php echo e(asset('bootstrap/js/bootstrap.min.js')); ?>"></script>
-    <script src="<?php echo e(asset('js/scripts.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/script.js')); ?>"></script>
     <script>
         $(window).on('load', function() {
             // Animate loader off screen

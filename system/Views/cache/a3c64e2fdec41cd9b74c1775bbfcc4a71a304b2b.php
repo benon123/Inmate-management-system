@@ -8,8 +8,8 @@
                     <form action="<?php echo e(url('auth/user')); ?>" method="post" id="loginForm">
                         <?php echo csrf_field(); ?>
                         <div class="form-group">
-                            <label for="email" class="sr-only">Email</label>
-                            <i class="fas fa-envelope text-success"></i> <input type="text" name="email" class="form-control bg-light" placeholder="enter your email or phone number" autocomplete="off" required/>
+                            <label for="username" class="sr-only">Username</label>
+                            <i class="fas fa-user text-success"></i> <input type="text" name="username" class="form-control bg-light" placeholder="username" autocomplete="off" required/>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="sr-only">Password</label>
@@ -24,7 +24,6 @@
                             <input type="hidden" name="login" value="1"/>
                             <button type="submit" class="btn btn-success w-100 login-btn">PROCEED</button>
                         </div>
-                        Don't have an account? <a href="<?php echo e(url('users/register')); ?>">Create Account</a>
                     </form>
                     <div class="response"></div>
                 </div>

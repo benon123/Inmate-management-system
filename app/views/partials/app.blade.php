@@ -36,7 +36,7 @@
     <script src="{{asset('jquery/jquery-3.6.0.min.js')}}"></script>
     <script src="{{asset('bootstrap/js/popper.min.js')}}"></script>
     <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('js/scripts.js')}}"></script>
+    <script src="{{asset('js/script.js')}}"></script>
     <script>
         $(window).on('load', function() {
             // Animate loader off screen

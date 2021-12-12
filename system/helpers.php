@@ -206,6 +206,7 @@ if(!function_exists('redirect'))
         
     /**
      * Send an Http Redirect
+     * @param string $url redirect url
      * @return \System\Http\Redirect\Redirect
      */
     function redirect(string $url = '') {
@@ -307,6 +308,18 @@ function response()
 function alert()
 {
    return new Alert(); 
+}
+
+
+if(!function_exists('_token'))
+{
+    /**
+    * Get the CRSF Token
+    */
+    function _token()
+    {
+        return CRSF::crsfTokenValue();
+    }
 }
 
 

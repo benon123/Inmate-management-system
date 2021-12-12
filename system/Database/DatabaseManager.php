@@ -202,12 +202,6 @@ class DatabaseManager extends QueryBuilder
                 
                 
             }
-
-            if($this->is_like)
-            {
-                $this->addLikeClause($columns);
-            }
-
             
             if(!$this->is_where)
             {
@@ -233,8 +227,15 @@ class DatabaseManager extends QueryBuilder
                 $this->executeOne($stmt);
                 return;
             }
+            
+            if($columns !== "*")
+            {
+                $this->query = str_replace("*", $columns, $this->query);
+            }
+            
             $stmt = $this->bindQueryData($this->query, $this->queryData);
             $this->execute($stmt);
+    
             return $this->result();
         }
            
@@ -587,7 +588,7 @@ class DatabaseManager extends QueryBuilder
     public function find($id, string $column = 'id')
     {
         $this->is_row = true;
-        return $this->where($column, $id)->get();
+        return $this->where($column, $id);
     }
 
     /**

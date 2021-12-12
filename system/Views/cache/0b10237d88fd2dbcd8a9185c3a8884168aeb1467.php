@@ -2,42 +2,86 @@
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid mt-3">
         <div class="row justify-content-center">
-            <div class="col-md-12 col-lg-6 col-xl-6">
-                <h4 class="font-weight-bold text-info">LOGIN</h4>
-                <div class="card card-body shadow">
-                    <?php if(!empty(response()->errors())): ?>
-                        
-                        <?php $__currentLoopData = response()->errors(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <p class="text-danger"><?php echo e($item); ?></p>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <?php endif; ?>
-                    
-                    <form action="<?php echo e(url('users/store')); ?>" method="post" id="ginForm">
+            <div class="col-md-12 col-lg-8 col-xl-8">
+                <h4 class="font-weight-bold text-maroon">CREATE IMNATE ACCOUNT</h4>
+                <div class="card card-body shadow bg-maroon">
+                    <form action="<?php echo e(url('/auth/user/new')); ?>" method="POST" id="accountForm">
                         <?php echo csrf_field(); ?>
-                        <div class="form-group">
-                            <label for="email" class="sr-only">Email</label>
-                            <i class="fas fa-envelope text-success"></i> <input type="text" name="email" class="form-control bg-light" placeholder="enter your email or phone number" autocomplete="off" required/>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="email" >Email</label>
+                                    <i class="fas fa-envelope text-success"></i> <input type="text" name="email" class="form-control bg-light" autocomplete="off" required/>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="phone_number" >Phone Number</label>
+                                    <input type="text" name="phone_number" class="form-control bg-light" autocomplete="off" required/>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="fname" class="sr-only">First Name</label>
-                            <i class="fas fa-envelope text-success"></i> <input type="text" name="fname" class="form-control bg-light" autocomplete="off" required/>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="fname" >First Name</label>
+                                    <input type="text" name="fname" class="form-control bg-light" autocomplete="off" required/>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="lname" >Last Name</label>
+                                    </i> <input type="text" name="lname" class="form-control bg-light" autocomplete="off" required/>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="lname" class="sr-only">Last Name</label>
-                            <i class="fas fa-envelope text-success"></i> <input type="text" name="lname" class="form-control bg-light" autocomplete="off" required/>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-4">
+                                    <label for="username" class="w-100">
+                                        Username 
+                                        <input type="text" name="username" class="form-control" autocomplete="off"/>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-4">
+                                    <label for="inmate" class="w-100">
+                                        Your Family Member's ID 
+                                        <input type="text" name="inmate" id="inmate" 
+                                        class="form-control" 
+                                        autocomplete="off"
+                                        data-req-url="<?php echo e(url('inmate/check')); ?>"/>
+                                        <span id="inmate-error"></span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="age" class="sr-only">Age</label>
-                            <i class="fas fa-envelope text-success"></i> <input type="text" name="age" class="form-control bg-light" autocomplete="off" required/>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-4">
+                                    <label for="password" class="w-100">
+                                        Password 
+                                        <input type="password" name="password" class="form-control" autocomplete="off"/>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-4">
+                                    <label for="password2" class="w-100">
+                                        Confirm Password
+                                        <input type="password" name="password" id="password2" class="form-control" autocomplete="off"/>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <label for="login" class="sr-only">Login</label>
-                            <input type="hidden" name="login" value="1"/>
-                            <button type="submit" class="btn btn-success w-100 login-btn">PROCEED</button>
+                            <button type="submit" class="btn btn-outline-light" id="register-btn">CREATE ACCOUNT</button>
                         </div>
-                        Don't have an account? <a href="<?php echo e(url('account')); ?>">Create Account</a>
+                        Have an account? <a href="<?php echo e(url()); ?>">Login</a>
                     </form>
-                    <div class="response"></div>
+                    <div class="response" id="response"></div>
                 </div>
               
             </div>

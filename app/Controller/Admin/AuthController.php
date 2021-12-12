@@ -1,9 +1,11 @@
 <?php 
  namespace App\Controller\Admin; 
  use App\Controller\BaseController;
+use App\Models\PrisonerNextOfKin;
 use App\Models\User;
 use System\Http\Request\Request;
 
+ini_set('display_errors', 0);
 class AuthController extends BaseController 
  { 
     public function login(Request $request)
@@ -11,35 +13,35 @@ class AuthController extends BaseController
         $username = $request->post('username');
         $password = $request->post('password');
 
-        $userData = User::find($username, 'username')->get();
+        $userData = User::find($username, 'username')->orWhere('email', $username)->get();
         
+
         if(empty($userData))
         {
-           return response()->json(202, 'Oops, account does not exist!');
+            return response()->json(202, 'Oops, account does not exist!');
         }
 
         if(!password()->verify($password, $userData->password))
         {
-         return response()->json(202, 'Oops, invalid username or password!');
+            return response()->json(202, 'Oops, invalid username or password!');
         }
 
         $message = array();
 
         switch ($userData->account_type) {
-           case 'staff':
-              session(['staff' => $userData]);
-              $message['redirect'] = url('inmate/staff/dashboard');
+            case 'staff':
+              session(['admin' => $userData]);
+              $message['redirect'] = url('inmate/admin/dashboard');
               break;
-           
-            case 'super':
-               session(['super' => $userData]);
+            case 'admin':
+               session(['admin' => $userData]);
                $message['redirect'] = url('inmate/admin/dashboard');
                break;
            default:
                session(['user' => $userData]);
                $message = [
-                  'alert' => 'Authenticated!',
-                  'redirect' => url('inmate')
+                  'message' => 'Authenticated!',
+                  'redirect' => url('inmate/dashboard')
                ];
               break;
         }
@@ -55,7 +57,7 @@ class AuthController extends BaseController
 
     public function create(Request $request)
     {
-         $username = $request->get('username');
+         $username = $request->post('username');
 
          if(User::where('username', $username)->exists())
          {
@@ -63,10 +65,12 @@ class AuthController extends BaseController
          }
 
          $userData = [
+            'email' => $request->post('email'),
             'username' => $username,
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
-            'password' => password()->hash($request->get('password'))
+            'first_name' => $request->post('fname'),
+            'last_name' => $request->post('lname'),
+            'phone_number' => $request->post('phone_number'),
+            'password' => password()->hash($request->post('password'))
          ];
 
          $user = new User($userData);
@@ -75,12 +79,21 @@ class AuthController extends BaseController
          {
             return response()->json(500, 'Account not created. Please try again later');
          }
+         $inmate = [
+            'p_id' => $request->post('inmate'),
+            'next_of_kin' => $username
+         ];
+         $inmate = new PrisonerNextOfKin($inmate);
+         $inmate->save();
          return response()->json(200, 'Account created successfully!');
     }
+
+
 
     public static function isLoggedIn(string $session_id = 'user')
     {
        $auth = new self;
        return $auth->session()->contains($session_id);
     }
+
  }

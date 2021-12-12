@@ -32,6 +32,8 @@ class QueryBuilder extends Transactions implements Query
 
     protected static $lastInsertId = 0;
 
+    protected $orderby = '';
+
     public function mainTable(string $table)
     {
         $this->query = "SELECT * FROM $table "; 
@@ -170,6 +172,11 @@ class QueryBuilder extends Transactions implements Query
                 $this->query .= " AND {$this->tableName}.deleted_at IS NULL";
             }
         }
+
+        if(!empty(trim($this->orderby)))
+        {
+            $this->query .= $this->orderby;
+        }
     }
 
 
@@ -271,8 +278,9 @@ class QueryBuilder extends Transactions implements Query
     {
         $sub_query = "SELECT * FROM {$this->tableName} AND ";
         $sub_query_len = strlen($sub_query);
+        echo $this->query . "<br/>";
         $this->query = substr($this->query, $sub_query_len, strlen($this->query) - $sub_query_len);
-
+        echo $this->query . "<br/>";
         $this->query = "SELECT $columns FROM {$this->tableName} WHERE " . $this->query;
         $this->query = trim($this->query);
     }
@@ -300,7 +308,7 @@ class QueryBuilder extends Transactions implements Query
 
     public function orderBy(string $column, string $order = "ASC")
     {
-        $this->query .= " ORDER BY $column $order ";
+        $this->orderby .= " ORDER BY $column $order ";
         return $this;
     }
 
@@ -324,5 +332,4 @@ class QueryBuilder extends Transactions implements Query
         
         return $this;
     }
-    
 }

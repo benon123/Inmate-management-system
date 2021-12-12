@@ -52,6 +52,7 @@ class Schema extends BluePrint
     public static function create(string $table, Closure $callback)
     {
         self::$migration =  "CREATE TABLE IF NOT EXISTS ". $table . "(\n\t";
+        self::$table = $table;
         call_user_func_array($callback, [new BluePrint]);
         
     }
@@ -59,6 +60,7 @@ class Schema extends BluePrint
     public static function dropIfExists($table)
     {
         self::$rollBackMigration = "DROP TABLE IF EXISTS $table;";
+        self::$table = $table;
     }
 
     public static function table(string $table, Closure $callback)

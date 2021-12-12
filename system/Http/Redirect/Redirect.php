@@ -4,6 +4,8 @@ namespace System\Http\Redirect;
 class Redirect
 {
     public $url;
+
+    public $status = 200;
     
     private function httpReferer()
     {
